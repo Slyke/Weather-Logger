@@ -4,7 +4,7 @@ const getRemoteIp = (req) => {
 
 const ipAllowed = (remoteIp, ipList) => {
   for (let i = 0; i < ipList.length; i++) {
-    if (ipList[i].indexOf(remoteIp) > -1) {
+    if (remoteIp.indexOf(ipList[i]) > -1) {
       return true;
     }
   }

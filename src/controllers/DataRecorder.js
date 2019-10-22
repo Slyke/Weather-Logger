@@ -23,6 +23,7 @@
       res.setHeader('Content-Type', 'application/json');
       const reqIp = getRemoteIp(req);
       if (!ipAllowed(reqIp, settings.allowedIps)) {
+        console.log(`Unauthorised update attempt from ${reqIp}`);
         res.status(401);
         return res.send({ method: req.method, time: getTimeStamp(), unauthorised: true });
       }
