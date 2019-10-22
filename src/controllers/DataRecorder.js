@@ -63,7 +63,7 @@
               "inside_stn_lon": location.longitude,
               "inside_stn_temp": atmosphere.temperature,
               "inside_stn_hum": atmosphere.humidity,
-              "inside_stn_pres": atmosphere.pressure,
+              "inside_stn_pres": atmosphere.pressure / 100,
               "outside_stn_id": weatherObject.id,
               "outside_stn_time": weatherObject.dt,
               "outside_stn_lat": weatherObject.coord.lat,
