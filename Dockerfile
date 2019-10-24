@@ -12,4 +12,4 @@ COPY src src/
 ENV PORT=3080
 
 EXPOSE 3080
-CMD [ "node", "server.js" ]
+CMD [ "node", "./src/index.js" ]
