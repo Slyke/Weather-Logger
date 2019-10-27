@@ -1,6 +1,6 @@
 const getRowHeaders = () => {
   return [
-    "inside_stn_datetime",
+    "inside_stn_datetime_-7gmt",
     "inside_stn_temp",
     "outside_stn_temp",
     "inside_outside_temp_diff",

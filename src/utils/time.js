@@ -12,9 +12,10 @@ const getYearMonth = (currentDate) => {
 
 const getYearMonthDayHourMinuteSecond = (currentDate) => {
   const date = currentDate || new Date();
-  const returnString = `${pad(date.getFullYear(), 4)}-${pad(date.getMonth() + 1, 2)}-${pad(date.getDate(), 2)}  ${pad(date.getHours(), 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
-console.log(1111, returnString);
+  const returnString = `${pad(date.getFullYear(), 4)}-${pad(date.getMonth() + 1, 2)}-${pad(date.getDate(), 2)}  ${pad(date.getHours(), 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
+
   return returnString.toString();
 };
 
