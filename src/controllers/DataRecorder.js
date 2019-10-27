@@ -4,7 +4,7 @@
   const Weather = require('../services/openWeatherMap');
   const GoogleSpreadsheet = require('../services/googleSpreadsheet');
 
-  const { getTimeStamp, getYearMonth } = require('../utils/time');
+  const { getTimeStamp, getYearMonth, getYearMonthDayHourMinuteSecond } = require('../utils/time');
   const { getRemoteIp, ipAllowed } = require('../utils/remoteIp');
   const { getRowHeaders, getRowHeaderIndex } = require('../utils/rowHeaders');
 
@@ -29,10 +29,18 @@
       }
 
       googleSpreadsheetSetupPromise.then(() => {
-        const sheetFound = googleSpreadsheet.addSheet(getYearMonth()).catch(() => {
+        let sheetFound;
+        try {
+          const stationId = req.body.payload.meta.stationId;
+          sheetFound = googleSpreadsheet.addSheet(`${getYearMonth()}-${stationId}`).catch(() => {
+            res.status(500);
+            return res.send({ method: req.method, time: getTimeStamp(), error: "Unable to connect to google spreadsheets" });
+          });
+        } catch (err) {
+          logger.error("addSheet: ", err);
           res.status(500);
-          return res.send({ method: req.method, time: getTimeStamp(), error: "Unable to connect to google spreadsheets" });
-        });
+          return res.send({ method: req.method, time: getTimeStamp(), error: "Unable to get sheet" });
+        }
 
         const latestWeather = weather.getLatestWeather();
         const rowHeaders = getRowHeaders();
@@ -49,6 +57,7 @@
             res.status(500);
             return res.send({ method: req.method, time: getTimeStamp(), added: false, error: true });
           }
+
           try {
             const {
               meta,
@@ -70,7 +79,9 @@
               "outside_stn_lon": weatherObject.coord.lon,
               "outside_stn_temp": weatherObject.main.temp,
               "outside_stn_hum": weatherObject.main.humidity,
-              "outside_stn_pres": weatherObject.main.pressure
+              "outside_stn_pres": weatherObject.main.pressure,
+              "inside_stn_datetime": getYearMonthDayHourMinuteSecond(),
+              "inside_outside_temp_diff": parseInt(atmosphere.temperature) - parseInt(weatherObject.main.temp)
             }).then(() => {
               return res.send({ method: req.method, time: getTimeStamp(), added: true });
             }).catch((addError) => {
