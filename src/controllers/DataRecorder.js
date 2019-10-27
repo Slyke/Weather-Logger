@@ -81,7 +81,7 @@
               "outside_stn_hum": weatherObject.main.humidity,
               "outside_stn_pres": weatherObject.main.pressure,
               "inside_stn_datetime": getYearMonthDayHourMinuteSecond(),
-              "inside_outside_temp_diff": parseInt(atmosphere.temperature) - parseInt(weatherObject.main.temp)
+              "inside_outside_temp_diff": parseFloat(atmosphere.temperature) - parseFloat(weatherObject.main.temp)
             }).then(() => {
               return res.send({ method: req.method, time: getTimeStamp(), added: true });
             }).catch((addError) => {
