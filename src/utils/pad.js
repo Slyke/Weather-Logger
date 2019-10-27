@@ -2,11 +2,11 @@ function pad(str, totalSize, withChar = "0", atEnd = false) {
   var s = str + "";
   if (atEnd) {
     while (s.length < totalSize) {
-      s += withChar;
+      s += withChar.toString();
     }
   } else {
     while (s.length < totalSize) {
-      s =+ withChar;
+      s =+ withChar.toString();
     }
   }
   return s;
