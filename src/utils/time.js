@@ -15,7 +15,7 @@ const getYearMonthDayHourMinuteSecond = (currentDate) => {
   date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
 
   const returnString = `${pad(date.getFullYear(), 4)}-${pad(date.getMonth() + 1, 2)}-${pad(date.getDate(), 2)}  ${pad(date.getHours(), 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
-console.log(111111, returnString)
+
   return returnString.toString();
 };
 
